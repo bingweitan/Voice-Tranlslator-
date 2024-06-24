@@ -13,15 +13,10 @@ os.makedirs(AUDIO_DIR, exist_ok=True)
 # Language codes
 LANGUAGE_CODES = {
     'English': 'en',
-    'Spanish': 'es',
-    'French': 'fr',
-    'German': 'de',
     'Chinese': 'zh-CN',
     'Japanese': 'ja',
     'Korean': 'ko',
-    'Russian': 'ru',
-    'Italian': 'it',
-    'Portuguese': 'pt'
+    'Malay': 'ms',
 }
 
 @app.route('/')
