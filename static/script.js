@@ -8,7 +8,7 @@ const manualInputEl = document.getElementById('manual-input');
 const switchBtn = document.getElementById('switch-btn');
 
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.lang = 'en-US';
+// recognition.lang = 'ms', 'en-US';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
@@ -21,10 +21,12 @@ recordBtn.addEventListener('click', () => {
     if (isRecording) {
         recognition.stop();
     } else {
+        const inputLanguage = inputLanguageSelect.value;
+        recognition.lang = inputLanguage === 'auto' ? 'en-US' : inputLanguage; // Default to English (United States) if 'auto' is selected
+
         recognition.start();
     }
     isRecording = !isRecording;
-    // recordBtn.innerHTML = isRecording ? '<i class="fas fa-stop"></i> Stop Recording' : '<i class="fas fa-microphone"></i> Start Recording';
     if (isRecording){
         recordBtn.classList.add("is-recording");
     }else{
@@ -36,7 +38,7 @@ recognition.onresult = async (event) => {
     const transcript = event.results[0][0].transcript;
     manualInputEl.value = transcript;
     
-    const inputLanguage = inputLanguageSelect.value;
+    const inputLanguage = inputLanguageSelect.value; // === 'auto' ? 'ms' : inputLanguageSelect;
     const targetLanguage = languageSelect.value;
     
     const data = await translateText(transcript, inputLanguage, targetLanguage);
@@ -53,15 +55,6 @@ recognition.onerror = (event) => {
     isRecording = false;
     recordBtn.classList.remove("is-recording")
 };
-
-// translateBtn.addEventListener('click', async () => {
-//     const text = manualInputEl.value;
-//     const inputLanguage = inputLanguageSelect.value;
-//     const targetLanguage = languageSelect.value;
-
-//     const data = await translateText(text, inputLanguage, targetLanguage);
-//     updateTranslationOutput(data);
-// });
 
 switchBtn.addEventListener('click', () => {
     const temp = inputLanguageSelect.value;
