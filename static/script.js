@@ -8,7 +8,6 @@ const manualInputEl = document.getElementById('manual-input');
 const switchBtn = document.getElementById('switch-btn');
 
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-// recognition.lang = 'ms', 'en-US';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
@@ -38,7 +37,7 @@ recognition.onresult = async (event) => {
     const transcript = event.results[0][0].transcript;
     manualInputEl.value = transcript;
     
-    const inputLanguage = inputLanguageSelect.value; // === 'auto' ? 'ms' : inputLanguageSelect;
+    const inputLanguage = inputLanguageSelect.value; 
     const targetLanguage = languageSelect.value;
     
     const data = await translateText(transcript, inputLanguage, targetLanguage);
@@ -86,6 +85,11 @@ manualInputEl.addEventListener('input', async () => {
     }, doneTypingInterval);
 });
 
+// Handle language selection change for output language
+languageSelect.addEventListener('change', () => {
+    translateManualInput();
+});
+
 manualInputEl.addEventListener('input', () => {
     if (manualInputEl.value.trim() === '') {
         clearTranslationOutput();
@@ -130,4 +134,15 @@ function clearTranslationOutput() {
     translatedAudio.pause();
     translatedAudio.src = '';
     translatedAudio.load();
+}
+
+// Function to translate manual input
+async function translateManualInput() {
+    const text = manualInputEl.value;
+    const inputLanguage = inputLanguageSelect.value;
+    const targetLanguage = languageSelect.value;
+
+    translationEl.value = 'Translating...';
+    const data = await translateText(text, inputLanguage, targetLanguage);
+    updateTranslationOutput(data);
 }
