@@ -11,7 +11,8 @@
     align-items: center;
     min-height: 100vh;
     width: 100%;
-    background: linear-gradient(45deg, #010758, #490d61);
+    /* background: linear-gradient(45deg, #010758, #490d61); */
+    background: #a1bfdd;
     flex-direction: column;
 }
 
@@ -24,7 +25,7 @@
 }
 
 .container h1 span{
-    color: #ff2963;
+    color: #6683b7;
 }
 
 
@@ -46,11 +47,12 @@
     height: 150px;
     padding: 20px;
     font-size: 15px;
-    color: white;
+    color: #6683b7;
     margin: 10px 0;
     border: 0;
     outline: 0;
-    background: #403d84;
+    /* background: #403d84; */
+    background: #c1d0e7;
     border-radius: 10px;
     box-sizing: border-box;
     resize: none;
@@ -61,11 +63,12 @@
     height: 150px;
     padding: 20px;
     font-size: 15px;
-    color: white;
+    color: #6683b7;
     margin: 10px 0;
     border: 0;
     outline: 0;
-    background: #403d84;
+    /* background: #403d84; */
+    background: #c1d0e7;
     border-radius: 10px 10px 0px 0px;
     box-sizing: border-box;
     resize: none;
@@ -73,7 +76,7 @@
 
 .text-input::placeholder{
     font-size: 16px;
-    color: white;
+    color: #6683b7;
 }
 
 
@@ -190,34 +193,15 @@
     }
 }
 
-/* .btn2 {
-    font-size: 16px;
-    border: 0;
-    outline: 0;
-    border-radius: 35px;
-    cursor: pointer;
-    background: #ff2963;
-    color: white;
-    transition: background-color 0.3s;
-    margin-left: 50px;
-    height: 60px;
-    width: 260px;
-    /* padding: 10px 30px; */
-    /*display: flex; 
-} */
-
-.btn2:hover {
-    background-color: #e75a80;
-} */
-
 .row2{
     margin-top: 20px;
 } 
 
 .select {
     flex: 1;
-    color: white;
-    background: #403d84;
+    color: #6683b7;
+    /* background: #403d84; */
+    background: #c1d0e7;
     height: 50px;
     outline: 0;
     width: 260px;
@@ -235,7 +219,7 @@ audio {
 }
 
 .notification{
-    color: white;
+    color: #6683b7;
 }
 
 #copy-btn{
@@ -246,7 +230,8 @@ audio {
 }
 
 .bar{
-    background: #403d84;
+    /* background: #403d84; */
+    background: #c1d0e7;
     /* background:white; */
     width: 600px;
     height: 40px;

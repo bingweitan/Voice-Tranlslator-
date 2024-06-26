@@ -80,7 +80,7 @@ manualInputEl.addEventListener('input', async () => {
     const targetLanguage = languageSelect.value;
 
     //Display translating... text while translating
-    translationEl.value = 'Translating...';
+    //translationEl.value = 'Translating...';
     const data = await translateText(text, inputLanguage, targetLanguage);
     updateTranslationOutput(data);
     }, doneTypingInterval);
@@ -118,7 +118,7 @@ function updateTranslationOutput(data) {
     translationEl.value = `${data.translated_text}`;
 
     copyBtn.disabled = !data.translated_text;
-    copyBtn.style.color='white';
+    copyBtn.style.color='#6683b7';
     copyBtn.style.cursor='pointer';
     
     // Clear previous audio source
@@ -150,7 +150,7 @@ async function translateManualInput() {
     const inputLanguage = inputLanguageSelect.value;
     const targetLanguage = languageSelect.value;
 
-    translationEl.value = 'Translating...';
+    //translationEl.value = 'Translating...';
     const data = await translateText(text, inputLanguage, targetLanguage);
     updateTranslationOutput(data);
 }
