@@ -6,6 +6,8 @@ const translationEl = document.getElementById('translation');
 const translatedAudio = document.getElementById('translated-audio');
 const manualInputEl = document.getElementById('manual-input');
 const switchBtn = document.getElementById('switch-btn');
+const copyBtn = document.getElementById('copy-btn');
+const notification = document.getElementById('notification');
 
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.interimResults = false;
@@ -15,13 +17,12 @@ let isRecording = false;
 let typingTimer;  // Timer identifier
 let doneTypingInterval = 1000;  // Time in ms (1 second)
 
-
 recordBtn.addEventListener('click', () => {
     if (isRecording) {
         recognition.stop();
     } else {
         const inputLanguage = inputLanguageSelect.value;
-        recognition.lang = inputLanguage === 'auto' ? 'en-US' : inputLanguage; // Default to English (United States) if 'auto' is selected
+        recognition.lang = inputLanguage === 'auto' ? 'en' : inputLanguage; // Default to English (United States) if 'auto' is selected
 
         recognition.start();
     }
@@ -115,6 +116,10 @@ async function translateText(text, inputLanguage, targetLanguage) {
 
 function updateTranslationOutput(data) {
     translationEl.value = `${data.translated_text}`;
+
+    copyBtn.disabled = !data.translated_text;
+    copyBtn.style.color='white';
+    copyBtn.style.cursor='pointer';
     
     // Clear previous audio source
     translatedAudio.pause();
@@ -128,7 +133,10 @@ function updateTranslationOutput(data) {
 
 //clear output after input is cleared
 function clearTranslationOutput() {
-    translationEl.value = '';
+    translationEl.value = ' ';
+
+    // Disable the copy button
+    copyBtn.disabled = true;
     
     // Clear previous audio source
     translatedAudio.pause();
@@ -145,4 +153,22 @@ async function translateManualInput() {
     translationEl.value = 'Translating...';
     const data = await translateText(text, inputLanguage, targetLanguage);
     updateTranslationOutput(data);
+}
+
+// Copy translation to clipboard
+copyBtn.addEventListener('click', () => {
+    const translationText = translationEl.value;
+    navigator.clipboard.writeText(translationText).then(() => {
+        showNotification();
+    }).catch(err => {
+        console.error('Could not copy text: ', err);
+    });
+});
+
+// Function to show notification
+function showNotification() {
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 2000); // Show notification for 2 seconds
 }
