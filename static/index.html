@@ -18,54 +18,48 @@
         <h1>Live Voice <span>Translator</span></h1>
         <div class="controls">
             <select id="input-language-select" class="select">
-                <option value="auto">Auto Detect</option>
-                <option value="en">English</option>
-                <!-- <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option> -->
-                <option value="zh-CN">Chinese</option>
+                <!-- <option value="auto">Auto Detect</option> -->
                 <option value="ms">Malay</option>
-                <!-- <option value="ja">Japanese</option>
-                <option value="ko">Korean</option> -->
-                <!--<option value="ru">Russian</option>
-                <option value="it">Italian</option>
-                <option value="pt">Portuguese</option> -->
+                <option value="en">English</option>
+                <option value="zh-CN">Chinese</option>
             </select>
             <button id="switch-btn" class="switchbtn">
                 <span class="material-symbols-outlined">swap_horiz</span>
             </button>
             <select id="language-select" class="select">
-                <!-- <option value="es">Spanish</option> -->
                 <option value="en">English</option>
-                <!-- <option value="fr">French</option>
-                <option value="de">German</option> -->
                 <option value="zh-CN">Chinese</option>
                 <option value="ms">Malay</option>
-                <!-- <option value="ja">Japanese</option>
-                <option value="ko">Korean</option> -->
-                <!--<option value="ru">Russian</option>
-                <option value="it">Italian</option>
-                <option value="pt">Portuguese</option> -->
             </select>
         </div>
         <textarea id="manual-input" class="text-input" placeholder="Type or speak text here..."></textarea>
         
         <div class="output">
-            <!-- <p>Output Text:</p> -->
             <textarea id="translation" class="text-output" readonly></textarea>
             <audio id="translated-audio" controls></audio>
         </div>
-        <!-- <button id="record-btn" class="btn" id="mic"><i class="fas fa-microphone"></i> Start Recording</button> -->
-        <!-- class = mictoggle  -->
+        <div class = "bar">
+            <button id="copy-btn" disabled>
+                <span  class="material-symbols-outlined" >content_copy</span>
+            </button>
+        </div>
+        <!-- <button id="copy-btn" disabled>Copy</button> -->
+        <!-- <button id="copy-btn" disabled>
+            <span  class="material-symbols-outlined" >content_copy</span>
+        </button> -->
+       
+
+        <div id="notification" class= "notification" style="display: none;">Translation copied to clipboard</div>
     <div class="row2">
     <div class="buttons">
         <button id="record-btn" class="btn">
             <span class="material-symbols-outlined">mic</span>
         </button>
-        <!-- <button id="translate-btn" class="btn2">Translate</button> -->
     </div>
     </div>
     </div>
-    <script src="/static/script.js"></script>
+    <script src="/static/script.js">
+
+    </script>
 </body>
 </html>

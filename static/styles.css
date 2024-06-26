@@ -41,8 +41,7 @@
     gap: 20px; */
 }
 
-.text-input,
-.text-output {
+.text-input{
     width: 600px;
     height: 150px;
     padding: 20px;
@@ -53,6 +52,21 @@
     outline: 0;
     background: #403d84;
     border-radius: 10px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.text-output {
+    width: 600px;
+    height: 150px;
+    padding: 20px;
+    font-size: 15px;
+    color: white;
+    margin: 10px 0;
+    border: 0;
+    outline: 0;
+    background: #403d84;
+    border-radius: 10px 10px 0px 0px;
     box-sizing: border-box;
     resize: none;
 }
@@ -91,7 +105,7 @@
     height: 60px;
     border-radius: 50%;
     background-color: #ff2963;
-    margin-top: 20px; 
+    margin-top: 40px; 
     cursor: pointer;
     appearance: none;
     border: 0;
@@ -219,3 +233,24 @@ audio {
     width: 100%;
     display: none;
 }
+
+.notification{
+    color: white;
+}
+
+#copy-btn{
+    background: transparent;
+    border: 0;
+    margin-top: 7px;
+    margin-left: 10px;
+}
+
+.bar{
+    background: #403d84;
+    /* background:white; */
+    width: 600px;
+    height: 40px;
+    margin-top: -20px;
+    border-radius: 0 0 10px 10px;
+}
+
