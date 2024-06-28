@@ -11,7 +11,6 @@
     align-items: center;
     min-height: 100vh;
     width: 100%;
-    /* background: linear-gradient(45deg, #010758, #490d61); */
     background: #a1bfdd;
     flex-direction: column;
 }
@@ -36,10 +35,7 @@
 
 .controls {
     margin-bottom: 20px;
-    /* width: 600px;
-    display: flex;
-    align-items: center;
-    gap: 20px; */
+
 }
 
 .text-input{
@@ -51,7 +47,6 @@
     margin: 10px 0;
     border: 0;
     outline: 0;
-    /* background: #403d84; */
     background: #c1d0e7;
     border-radius: 10px;
     box-sizing: border-box;
@@ -67,7 +62,6 @@
     margin: 10px 0;
     border: 0;
     outline: 0;
-    /* background: #403d84; */
     background: #c1d0e7;
     border-radius: 10px 10px 0px 0px;
     box-sizing: border-box;
@@ -230,9 +224,7 @@ audio {
 }
 
 .bar{
-    /* background: #403d84; */
     background: #c1d0e7;
-    /* background:white; */
     width: 600px;
     height: 40px;
     margin-top: -20px;
