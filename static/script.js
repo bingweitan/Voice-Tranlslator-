@@ -1,3 +1,4 @@
+
 const recordBtn = document.getElementById('record-btn');
 const translateBtn = document.getElementById('translate-btn');
 const inputLanguageSelect = document.getElementById('input-language-select');
@@ -199,4 +200,3 @@ function showNotification() {
         notification.style.display = 'none';
     }, 2000); // Show notification for 2 seconds
 }
-
