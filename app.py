@@ -14,8 +14,6 @@ os.makedirs(AUDIO_DIR, exist_ok=True)
 LANGUAGE_CODES = {
     'English': 'en',
     'Chinese': 'zh-CN',
-    'Japanese': 'ja',
-    'Korean': 'ko',
     'Malay': 'ms',
 }
 

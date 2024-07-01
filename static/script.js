@@ -9,20 +9,24 @@ const switchBtn = document.getElementById('switch-btn');
 const copyBtn = document.getElementById('copy-btn');
 const notification = document.getElementById('notification');
 
+// Initialize SpeechRecognition
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.interimResults = false;
+recognition.continuous = true; // Keep listening until explicitly stopped
+recognition.interimResults = true;
 recognition.maxAlternatives = 1;
 
 let isRecording = false;
 let typingTimer;  // Timer identifier
 let doneTypingInterval = 1000;  // Time in ms (1 second)
 
+// Function to start or stop recording
 recordBtn.addEventListener('click', () => {
     if (isRecording) {
         recognition.stop();
     } else {
+        // set recognition.lang based on inputLanguageSelect value
         const inputLanguage = inputLanguageSelect.value;
-        recognition.lang = inputLanguage === 'auto' ? 'en' : inputLanguage; // Default to English (United States) if 'auto' is selected
+        recognition.lang = inputLanguage === 'auto' ? 'en-US' : inputLanguage; // Default to English (United States) if 'auto' is selected
 
         recognition.start();
     }
@@ -34,20 +38,38 @@ recordBtn.addEventListener('click', () => {
     }
 });
 
+// Speech recognition result handler
 recognition.onresult = async (event) => {
-    const transcript = event.results[0][0].transcript;
-    manualInputEl.value = transcript;
-    
-    const inputLanguage = inputLanguageSelect.value; 
-    const targetLanguage = languageSelect.value;
-    
-    const data = await translateText(transcript, inputLanguage, targetLanguage);
-    updateTranslationOutput(data);
+
+    let transcript = '';
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+        transcript += event.results[i][0].transcript;
+    }
+    manualInputEl.value = transcript; // Update the manual input with the interim result
+
+    if (!event.results[event.resultIndex].isFinal) {
+        // If the result is not final, translate the interim result
+        const inputLanguage = inputLanguageSelect.value; // This could be 'auto' or a specific language code
+        const targetLanguage = languageSelect.value;
+
+        const data = await translateText(transcript, inputLanguage, targetLanguage);
+        updateTranslationOutput(data, true); // Pass true to indicate interim translation
+    } else {
+        // If the result is final, translate the final result
+        const inputLanguage = inputLanguageSelect.value; // This could be 'auto' or a specific language code
+        const targetLanguage = languageSelect.value;
+
+        const data = await translateText(transcript, inputLanguage, targetLanguage);
+        updateTranslationOutput(data, false); // Pass false to indicate final translation
+    }
 };
 
-recognition.onspeechend = () => {
-    isRecording = false;
-    recordBtn.classList.remove("is-recording")
+
+// handle end of speech recognition
+recognition.onend = () => {
+    if (isRecording) {
+        recognition.start();
+    }
 };
 
 recognition.onerror = (event) => {
@@ -55,7 +77,8 @@ recognition.onerror = (event) => {
     isRecording = false;
     recordBtn.classList.remove("is-recording")
 };
-
+ 
+//function to switch input and output languages
 switchBtn.addEventListener('click', () => {
     const temp = inputLanguageSelect.value;
     inputLanguageSelect.value = languageSelect.value;
@@ -80,9 +103,8 @@ manualInputEl.addEventListener('input', async () => {
     const targetLanguage = languageSelect.value;
 
     //Display translating... text while translating
-    //translationEl.value = 'Translating...';
     const data = await translateText(text, inputLanguage, targetLanguage);
-    updateTranslationOutput(data);
+    updateTranslationOutput(data, false);
     }, doneTypingInterval);
 });
 
@@ -96,7 +118,6 @@ manualInputEl.addEventListener('input', () => {
         clearTranslationOutput();
     }
 });
-
 
 async function translateText(text, inputLanguage, targetLanguage) {
     const response = await fetch('/translate', {
@@ -114,14 +135,20 @@ async function translateText(text, inputLanguage, targetLanguage) {
     return await response.json();
 }
 
-function updateTranslationOutput(data) {
-    translationEl.value = `${data.translated_text}`;
-
-    copyBtn.disabled = !data.translated_text;
-    copyBtn.style.color='#6683b7';
-    copyBtn.style.cursor='pointer';
+function updateTranslationOutput(data, isInterim) {
+    //translationEl.value = `${data.translated_text}`;
     
+    if (isInterim) {
+        translationEl.value = `${data.translated_text}`;
+    } else {
+        translationEl.value = `${data.translated_text}`;
+    }
+
+    // Enable or disable the copy button based on the translation output
+    copyBtn.disabled = !data.translated_text;
+
     // Clear previous audio source
+    if (!isInterim) {
     translatedAudio.pause();
     translatedAudio.src = '';
     translatedAudio.load();
@@ -129,11 +156,12 @@ function updateTranslationOutput(data) {
     // Set new audio source with a unique query parameter to prevent caching
     translatedAudio.src = `/translated_audio/${data.audio_file}?t=${new Date().getTime()}`;
     translatedAudio.play();
+    }
 }
 
 //clear output after input is cleared
 function clearTranslationOutput() {
-    translationEl.value = ' ';
+    translationEl.value = '';
 
     // Disable the copy button
     copyBtn.disabled = true;
@@ -150,9 +178,8 @@ async function translateManualInput() {
     const inputLanguage = inputLanguageSelect.value;
     const targetLanguage = languageSelect.value;
 
-    //translationEl.value = 'Translating...';
     const data = await translateText(text, inputLanguage, targetLanguage);
-    updateTranslationOutput(data);
+    updateTranslationOutput(data, false);
 }
 
 // Copy translation to clipboard
@@ -172,3 +199,4 @@ function showNotification() {
         notification.style.display = 'none';
     }, 2000); // Show notification for 2 seconds
 }
+
