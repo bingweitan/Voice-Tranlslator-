@@ -56,6 +56,3 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"path\to\your\service-account-fi
 
 python app.py
 
-5. Open the app in your browser:
-
-http://127.0.0.1:5000/
